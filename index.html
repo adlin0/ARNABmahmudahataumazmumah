@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misi Budi: Mahmudah atau Mazmumah?</title>
+    <style>
+        :root {
+            --primary: #1b5e20;
+            --primary-light: #4caf50;
+            --accent: #ff9800;
+            --card-bg: rgba(255, 255, 255, 0.96);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #87ceeb 0%, #b2edd4 60%, #4caf50 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* --- DEKORASI HUTAN SIANG & AWAN --- */
+        .day-forest-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .sun {
+            position: absolute;
+            top: 25px;
+            left: 35px;
+            width: 80px;
+            height: 80px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            box-shadow: 0 0 40px #ffeb3b, 0 0 80px #fff59d;
+            animation: pulse-sun 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-sun {
+            0% { transform: scale(0.98); }
+            100% { transform: scale(1.05); }
+        }
+
+        .cloud {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50px;
+            opacity: 0.9;
+            animation: move-clouds var(--speed) linear infinite;
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .cloud1 {
+            width: 120px;
+            height: 40px;
+            top: 40px;
+            left: -150px;
+            --speed: 25s;
+        }
+        .cloud1::before { width: 50px; height: 50px; top: -20px; left: 20px; }
+        .cloud1::after { width: 40px; height: 40px; top: -15px; left: 55px; }
+
+        .cloud2 {
+            width: 160px;
+            height: 50px;
+            top: 100px;
+            left: -200px;
+            --speed: 35s;
+            animation-delay: -10s;
+        }
+        .cloud2::before { width: 70px; height: 70px; top: -30px; left: 25px; }
+        .cloud2::after { width: 50px; height: 50px; top: -20px; left: 80px; }
+
+        @keyframes move-clouds {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 300px)); }
+        }
+
+        .tree {
+            position: absolute;
+            bottom: 0px;
+            z-index: 1;
+            transform-origin: bottom center;
+            animation: sway 4s ease-in-out infinite alternate;
+        }
+
+        .tree-left-1 { left: -20px; width: 140px; }
+        .tree-left-2 { left: 75px; width: 105px; animation-delay: -1.5s; }
+        .tree-right-1 { right: -20px; width: 150px; }
+        .tree-right-2 { right: 80px; width: 110px; animation-delay: -2.5s; }
+
+        @keyframes sway {
+            0% { transform: rotate(-1.5deg); }
+            100% { transform: rotate(1.5deg); }
+        }
+
+        .character {
+            position: absolute;
+            bottom: 25px;
+            z-index: 3;
+            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.25));
+            transition: transform 0.3s ease;
+        }
+
+        .char-rabbit { left: 40px; width: 85px; }
+        .char-turtle { right: 40px; width: 95px; }
+
+        .char-rabbit:hover, .char-turtle:hover {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .game-container {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 650px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            border: 4px solid #2e7d32;
+            backdrop-filter: blur(4px);
+        }
+
+        /* --- PEMBETULAN KHAS GAMBAR BUDI BAHARU --- */
+        .budi-container {
+            display: inline-block;
+            background: transparent;
+            margin-bottom: 5px;
+        }
+
+        .budi-avatar {
+            width: 140px;
+            height: auto;
+            max-height: 160px;
+            object-fit: contain;
+            mix-blend-mode: multiply; /* Menghilangkan latar belakang yang bertukar hitam/putih */
+            animation: bounce-budi 3s ease-in-out infinite alternate;
+        }
+
+        .budi-avatar-small {
+            width: 90px;
+            height: auto;
+            max-height: 100px;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        @keyframes bounce-budi {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.1rem;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 0px #fff;
+            line-height: 1.2;
+        }
+
+        h2 {
+            color: #1b5e20;
+            font-size: 1.4rem;
+            margin-top: 0;
+        }
+
+        p {
+            color: #333;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .intro-box {
+            background: #e8f5e9;
+            border: 2px dashed #81c784;
+            border-radius: 16px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .intro-box p {
+            margin: 0;
+            color: #2e7d32;
+        }
+
+        .how-to-play {
+            background: #ffffff;
+            border: 2px solid #a5d6a7;
+            border-radius: 16px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .how-to-play h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .how-to-play ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #444;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .how-to-play li {
+            margin-bottom: 6px;
+        }
+
+        .input-group {
+            background: #f1f8e9;
+            border-radius: 16px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid #c8e6c9;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            color: #1b5e20;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            max-width: 380px;
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            border: 2px solid #81c784;
+            border-radius: 25px;
+            outline: none;
+            text-align: center;
+            background: #fff;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn {
+            background-color: var(--primary-light);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.15s, background-color 0.2s;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .btn-start {
+            font-size: 1.2rem;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-bottom: 4px solid #1b5e20;
+        }
+
+        .btn-mahmudah {
+            background-color: #2e7d32;
+            border-bottom: 4px solid #1b5e20;
+        }
+        .btn-mahmudah:hover {
+            background-color: #1b5e20;
+        }
+
+        .btn-mazmumah {
+            background-color: #c62828;
+            border-bottom: 4px solid #8e0000;
+        }
+        .btn-mazmumah:hover {
+            background-color: #b71c1c;
+        }
+
+        .story-badge {
+            background: #fff3e0;
+            color: #e65100;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid #ffe0b2;
+        }
+
+        .card {
+            background: #f1f8e9;
+            border: 2px dashed #7cb342;
+            border-radius: 16px;
+            padding: 22px;
+            margin: 15px 0 25px 0;
+            min-height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .card p {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1b5e20;
+            margin: 0;
+        }
+
+        .progress {
+            font-size: 0.95rem;
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .feedback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+            z-index: 20;
+        }
+
+        .feedback.wrong {
+            background-color: rgba(211, 47, 47, 0.92);
+            opacity: 1;
+        }
+
+        .feedback.correct {
+            background-color: rgba(46, 125, 50, 0.92);
+            opacity: 1;
+        }
+
+        .score-box {
+            background: #e8f5e9;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #c8e6c9;
+        }
+
+        .score-number {
+            font-size: 3.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 5px 0;
+        }
+
+        .teacher-review-container {
+            background: #fffde7;
+            border-left: 6px solid #fbc02d;
+            padding: 15px;
+            text-align: left;
+            border-radius: 0 12px 12px 0;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .teacher-review-container h3 {
+            margin-top: 0;
+            color: #f57f17;
+        }
+
+        #status-sheet {
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .audio-ctrl {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ffffff;
+            border: 2px solid #a5d6a7;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="day-forest-bg">
+        <div class="sun"></div>
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+
+        <svg class="tree tree-left-1" viewBox="0 0 100 120">
+            <path d="M42 90 L58 90 L58 120 L42 120 Z" fill="#5d4037"/>
+            <circle cx="50" cy="70" r="35" fill="#2e7d32"/>
+            <circle cx="35" cy="50" r="25" fill="#388e3c"/>
+            <circle cx="65" cy="50" r="25" fill="#4caf50"/>
+        </svg>
+
+        <svg class="tree tree-left-2" viewBox="0 0 100 120">
+            <path d="M43 85 L57 85 L57 120 L43 120 Z" fill="#4e342e"/>
+            <polygon points="50,10 15,90 85,90" fill="#1b5e20"/>
+            <polygon points="50,0 25,65 75,65" fill="#2e7d32"/>
+        </svg>
+
+        <svg class="tree tree-right-1" viewBox="0 0 100 120">
+            <path d="M42 90 L58 90 L58 120 L42 120 Z" fill="#5d4037"/>
+            <circle cx="50" cy="65" r="40" fill="#1b5e20"/>
+            <circle cx="30" cy="45" r="25" fill="#2e7d32"/>
+            <circle cx="70" cy="45" r="25" fill="#388e3c"/>
+        </svg>
+
+        <svg class="tree tree-right-2" viewBox="0 0 100 120">
+            <path d="M43 85 L57 85 L57 120 L43 120 Z" fill="#388e3c"/>
+        </svg>
+
+        <svg id="rabbitChar" class="character char-rabbit" viewBox="0 0 100 100">
+            <ellipse cx="40" cy="20" rx="7" ry="20" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+            <ellipse cx="40" cy="20" rx="4" ry="14" fill="#ff80ab"/>
+            <ellipse cx="60" cy="20" rx="7" ry="20" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+            <ellipse cx="60" cy="20" rx="4" ry="14" fill="#ff80ab"/>
+            <circle cx="50" cy="65" r="25" fill="#ffffff"/>
+            <circle cx="50" cy="45" r="20" fill="#ffffff"/>
+            <circle cx="43" cy="42" r="3" fill="#333"/>
+            <circle cx="57" cy="42" r="3" fill="#333"/>
+            <polygon points="50,47 47,51 53,51" fill="#ff80ab"/>
+            <circle cx="38" cy="47" r="3" fill="#ff80ab" opacity="0.5"/>
+            <circle cx="62" cy="47" r="3" fill="#ff80ab" opacity="0.5"/>
+            <ellipse cx="38" cy="88" rx="10" ry="5" fill="#ffffff"/>
+            <ellipse cx="62" cy="88" rx="10" ry="5" fill="#ffffff"/>
+        </svg>
+
+        <svg id="turtleChar" class="character char-turtle" viewBox="0 0 100 100">
+            <ellipse cx="25" cy="65" rx="8" ry="5" fill="#7cb342"/>
+            <ellipse cx="75" cy="65" rx="8" ry="5" fill="#7cb342"/>
+            <ellipse cx="28" cy="48" rx="7" ry="5" fill="#7cb342"/>
+            <circle cx="82" cy="50" r="10" fill="#7cb342"/>
+            <circle cx="85" cy="48" r="2" fill="#333"/>
+            <path d="M 25 55 A 25 22 0 0 1 75 55 Z" fill="#558b2f" stroke="#2e7d32" stroke-width="3"/>
+            <path d="M 35 42 L 45 42 L 50 50 L 40 50 Z" fill="#689f38"/>
+            <path d="M 50 42 L 60 42 L 65 50 L 55 50 Z" fill="#689f38"/>
+        </svg>
+    </div>
+
+    <div class="game-container">
+        <button class="audio-ctrl" id="musicToggle" onclick="toggleMusic()" title="Mula/Henti Muzik">🔇</button>
+        
+        <div id="feedbackOverlay" class="feedback">BUZZZ!</div>
+
+        <!-- MULA -->
+        <div id="startScreen" class="screen active">
+            <!-- PAUTAN GAMBAR BAHARU: 1F6XdDKJ0C7x4T8k3ddl2upfZ5iUHhADS -->
+            <div class="budi-container">
+                <img src="https://lh3.googleusercontent.com/d/1F6XdDKJ0C7x4T8k3ddl2upfZ5iUHhADS" 
+                     onerror="this.onerror=null; this.src='https://drive.google.com/thumbnail?id=1F6XdDKJ0C7x4T8k3ddl2upfZ5iUHhADS&sz=w500';" 
+                     alt="Budi" class="budi-avatar">
+            </div>
+            
+            <h1>MISI BUDI:<br>MAHMUDAH ATAU MAZMUMAH?</h1>
+            
+            <div class="intro-box">
+                <p>Bantu <b>Budi</b> mengembara di hutan rimba bersama <i>Arnab dan Kura-Kura</i> serta kenal pasti sifat terpuji dan tercela!</p>
+            </div>
+
+            <div class="how-to-play">
+                <h3>🎮 Cara Bermain:</h3>
+                <ul>
+                    <li>Masukkan nama anda di ruangan yang disediakan.</li>
+                    <li>Baca situasi yang dipaparkan dalam setiap soalan.</li>
+                    <li>Pilih butang <b>MAHMUDAH</b> (Sifat Terpuji) atau <b>MAZMUMAH</b> (Sifat Tercela).</li>
+                    <li>Kumpul markah penuh <b>100 markah</b> bagi menyelesaikan kembara ini!</li>
+                </ul>
+            </div>
+
+            <div class="input-group">
+                <label for="playerName">👤 Nama Murid:</label>
+                <input type="text" id="playerName" placeholder="Taip nama penuh anda di sini..." maxlength="20">
+            </div>
+
+            <button class="btn btn-start" onclick="startGame()">🚀 MULA KEMBARA</button>
+        </div>
+
+        <!-- PERMAINAN -->
+        <div id="gameScreen" class="screen">
+            <div class="progress" id="progressText">Soalan 1 daripada 5 (20 Markah)</div>
+            <div class="story-badge">Babak: Arnab dan Kura-Kura</div>
+            
+            <div class="card">
+                <p id="situationText">Situasi akan muncul di sini...</p>
+            </div>
+
+            <p><b>Pilih sifat yang betul bagi situasi di atas:</b></p>
+            <div>
+                <button class="btn btn-mahmudah" onclick="checkAnswer('mahmudah')">MAHMUDAH<br><small>(Sifat Terpuji)</small></button>
+                <button class="btn btn-mazmumah" onclick="checkAnswer('mazmumah')">MAZMUMAH<br><small>(Sifat Tercela)</small></button>
+            </div>
+        </div>
+
+        <!-- KEPUTUSAN -->
+        <div id="endScreen" class="screen">
+            <h2>Syabas, Pengembaraan Tamat!</h2>
+            <p>Berikut adalah keputusannya, <b id="displayPlayerName"></b>:</p>
+            
+            <div class="score-box">
+                <div>Jumlah Skor Anda:</div>
+                <div class="score-number" id="finalScore">0 / 100</div>
+                <div id="scoreDetail">0 daripada 5 soalan betul</div>
+            </div>
+
+            <div class="teacher-review-container">
+                <img src="https://lh3.googleusercontent.com/d/1F6XdDKJ0C7x4T8k3ddl2upfZ5iUHhADS" 
+                     onerror="this.onerror=null; this.src='https://drive.google.com/thumbnail?id=1F6XdDKJ0C7x4T8k3ddl2upfZ5iUHhADS&sz=w200';" 
+                     alt="Budi" class="budi-avatar-small">
+                <div>
+                    <h3>Ulasan Guru / Budi:</h3>
+                    <p id="teacherComment" style="margin:0;">Ulasan dipaparkan di sini...</p>
+                </div>
+            </div>
+
+            <p id="status-sheet"></p>
+
+            <button class="btn" onclick="resetGame()">MAIN SEMULA</button>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz2s7j4Sm1fgFBzlNHlwYZ6S37eXfaO28aMrIKfzGbe_5c5K1Fkmm9I50xpvcmTWTCA2A/exec";
+
+        const questions = [
+            {
+                text: "Arnab berasa amat bangga dengan kelajuannya dan kerap mengejek Kura-Kura yang berjalan lambat di hadapan haiwan-haiwan lain.",
+                type: "mazmumah"
+            },
+            {
+                text: "Kura-Kura tidak berkecil hati mahupun marah. Dia dengan tenang menerima cabaran berlari daripada Arnab tanpa gentar.",
+                type: "mahmudah"
+            },
+            {
+                text: "Semasa perlumbaan, Arnab memandang rendah kemampuan Kura-Kura lalu mengambil keputusan untuk tidur di bawah pokok.",
+                type: "mazmumah"
+            },
+            {
+                text: "Kura-Kura terus melangkah perlahan-lahan tanpa berhenti, berdisiplin dan fokus menuju ke garisan penamat.",
+                type: "mahmudah"
+            },
+            {
+                text: "Selepas kalah, Arnab mengakui kesilapannya, mengucapkan tahniah kepada Kura-Kura dan berjanji tidak akan bersikap sombong lagi.",
+                type: "mahmudah"
+            }
+        ];
+
+        const teacherComments = {
+            0: "Jangan putus asa! Budi nampaknya tersesat dalam kembara ini. Ulang kaji semula perbezaan sifat Mahmudah dan Mazmumah, kemudian cuba lagi!",
+            20: "Usaha permulaan yang baik. Namun, Budi masih perlu lebih peka membezakan akhlak terpuji dan tercela. Mari cuba lagi!",
+            40: "Pencapaian sederhana. Anda sudah mula memahami sesetengah sifat. Teruskan membaca dan belajar!",
+            60: "Keputusan yang baik! Anda berjaya memahami kebanyakan sifat dalam pengembaraan ini. Sedikit sahaja lagi untuk cemerlang!",
+            80: "Sangat bagus! Anda mempunyai kefahaman yang tinggi tentang sifat Mahmudah dan Mazmumah. Budi amat bangga!",
+            100: "Cemerlang! Tahniah, anda seorang yang sangat bijaksana! Semua pilihan anda tepat dan Budi berjaya menyelesaikan misi dengan sempurna!"
+        };
+
+        let currentQuestion = 0;
+        let score = 0;
+        let playerName = "";
+        let audioContext = null;
+        let isMusicPlaying = false;
+        let bgmInterval = null;
+
+        function startGame() {
+            const nameInput = document.getElementById('playerName').value.trim();
+            if (nameInput === "") {
+                alert("Sila masukkan nama anda terlebih dahulu!");
+                return;
+            }
+            
+            playerName = nameInput;
+            currentQuestion = 0;
+            score = 0;
+
+            initAudio();
+            if(!isMusicPlaying) {
+                startBGM();
+            }
+
+            document.getElementById('startScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.add('active');
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('progressText').innerText = `Soalan ${currentQuestion + 1} daripada ${questions.length} (20 Markah)`;
+            document.getElementById('situationText').innerText = q.text;
+        }
+
+        function checkAnswer(selectedType) {
+            const correctType = questions[currentQuestion].type;
+            
+            if (selectedType === correctType) {
+                score += 20;
+                showFeedback(true);
+                playCorrectSound();
+                animateCharacters();
+            } else {
+                showFeedback(false);
+                playBuzzerSound();
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    endGame();
+                }
+            }, 1200);
+        }
+
+        function animateCharacters() {
+            const rabbit = document.getElementById('rabbitChar');
+            const turtle = document.getElementById('turtleChar');
+            rabbit.style.transform = 'translateY(-18px) scale(1.1)';
+            turtle.style.transform = 'translateY(-18px) scale(1.1)';
+            setTimeout(() => {
+                rabbit.style.transform = 'none';
+                turtle.style.transform = 'none';
+            }, 500);
+        }
+
+        function showFeedback(isCorrect) {
+            const overlay = document.getElementById('feedbackOverlay');
+            if (isCorrect) {
+                overlay.innerText = "TEPAT! (+20)";
+                overlay.className = "feedback correct";
+            } else {
+                overlay.innerText = "BUZZZ! (SALAH)";
+                overlay.className = "feedback wrong";
+            }
+
+            setTimeout(() => {
+                overlay.className = "feedback";
+            }, 1000);
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('endScreen').classList.add('active');
+
+            document.getElementById('displayPlayerName').innerText = playerName;
+            document.getElementById('finalScore').innerText = `${score} / 100`;
+            document.getElementById('scoreDetail').innerText = `${score / 20} daripada 5 soalan betul`;
+            
+            const ulasanTeks = teacherComments[score];
+            document.getElementById('teacherComment').innerText = ulasanTeks;
+
+            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.trim() !== "") {
+                hantarKeputusanGame(playerName, score, ulasanTeks);
+            }
+        }
+
+        function resetGame() {
+            document.getElementById('endScreen').classList.remove('active');
+            document.getElementById('startScreen').classList.add('active');
+            document.getElementById('playerName').value = "";
+            document.getElementById('status-sheet').innerText = "";
+        }
+
+        function hantarKeputusanGame(namaMurid, skorMurid, ulasanGame) {
+            const statusEl = document.getElementById("status-sheet");
+            statusEl.innerText = "Menghantar keputusan ke Google Sheets...";
+            statusEl.style.color = "#0284c7";
+
+            const dataGame = {
+                nama: namaMurid,
+                book: "ARNAB DAN KURA-KURA",
+                skor: Number(skorMurid),
+                ulasan: ulasanGame || ""
+            };
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify(dataGame)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success" || data.status === "success") {
+                    statusEl.innerText = "✅ Keputusan (Skor: " + skorMurid + ") berjaya disimpan dalam Google Sheets!";
+                    statusEl.style.color = "#2e7d32";
+                } else {
+                    statusEl.innerText = "⚠️ Simpanan selesai, sila semak Google Sheets.";
+                    statusEl.style.color = "#2e7d32";
+                }
+            })
+            .catch(error => {
+                console.error("Ralat Penghantaran:", error);
+                statusEl.innerText = "⚠️ Keputusan telah dihantar ke sistem.";
+                statusEl.style.color = "#2e7d32";
+            });
+        }
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playBuzzerSound() {
+            if (!audioContext) return;
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(130, audioContext.currentTime);
+            osc.frequency.setValueAtTime(110, audioContext.currentTime + 0.15);
+
+            gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+
+            osc.start();
+            osc.stop(audioContext.currentTime + 0.5);
+        }
+
+        function playCorrectSound() {
+            if (!audioContext) return;
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(523.25, audioContext.currentTime);
+            osc.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.15);
+
+            gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+
+            osc.start();
+            osc.stop(audioContext.currentTime + 0.4);
+        }
+
+        function startBGM() {
+            isMusicPlaying = true;
+            document.getElementById('musicToggle').innerText = "🔊";
+            
+            const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63];
+            let noteIdx = 0;
+
+            bgmInterval = setInterval(() => {
+                if (!isMusicPlaying || !audioContext) return;
+                
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(notes[noteIdx], audioContext.currentTime);
+
+                gain.gain.setValueAtTime(0.04, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.4);
+
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+
+                osc.start();
+                osc.stop(audioContext.currentTime + 0.4);
+
+                noteIdx = (noteIdx + 1) % notes.length;
+            }, 500);
+        }
+
+        function toggleMusic() {
+            initAudio();
+            if (isMusicPlaying) {
+                isMusicPlaying = false;
+                clearInterval(bgmInterval);
+                document.getElementById('musicToggle').innerText = "🔇";
+            } else {
+                startBGM();
+            }
+        }
+    </script>
+</body>
+</html>
